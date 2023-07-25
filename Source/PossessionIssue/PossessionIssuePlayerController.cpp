@@ -25,9 +25,29 @@
 #include <AbilitySystemComponent.h>
 #include <AbilitySystemInterface.h>
 
+#include "PossessionIssueCharacterBase.h"
+
 APossessionIssuePlayerController::APossessionIssuePlayerController()
 {
 	this->PrimaryActorTick.bCanEverTick = true;
+}
+
+void APossessionIssuePlayerController::SetPawn(APawn* InPawn)
+{
+	APossessionIssueCharacterBase*       OldCharacter = Cast<APossessionIssueCharacterBase>(this->GetPawn());
+	const APossessionIssueCharacterBase* NewCharacter = Cast<APossessionIssueCharacterBase>(InPawn);
+
+	Super::SetPawn(InPawn);
+
+	if ((OldCharacter != nullptr) && (OldCharacter != NewCharacter))
+	{
+		const UWorld*  World        = this->GetWorld();
+		FTimerManager& TimerManager = World->GetTimerManager();
+
+		// Schedule the old character to properly update their ASC ownership during the next frame. We have to wait for
+		// the new controller to replicate.
+		TimerManager.SetTimerForNextTick(OldCharacter, &APossessionIssueCharacterBase::RefreshAbilityActorInfo);
+	}
 }
 
 void APossessionIssuePlayerController::AcknowledgePossession(APawn* P)

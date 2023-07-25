@@ -62,8 +62,8 @@ public:
 	// =================================================================================================================
 	// Public Methods - Pawn Overrides
 	// =================================================================================================================
-	UFUNCTION(BlueprintCallable, NetMulticast, Reliable)
-	virtual void RefreshAsc();
+	UFUNCTION(BlueprintCallable)
+	virtual void RefreshAbilityActorInfo();
 
 	// =================================================================================================================
 	// Public Methods - IAbilitySystemInterface Implementation

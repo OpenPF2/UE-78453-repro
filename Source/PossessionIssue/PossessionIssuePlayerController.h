@@ -34,5 +34,6 @@ class POSSESSIONISSUE_API APossessionIssuePlayerController : public APlayerContr
 public:
 	APossessionIssuePlayerController();
 
+	virtual void SetPawn(APawn* InPawn) override;
 	virtual void AcknowledgePossession(APawn* P) override;
 };

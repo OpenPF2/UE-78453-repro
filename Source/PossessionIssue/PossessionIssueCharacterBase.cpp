@@ -34,10 +34,9 @@ APossessionIssueCharacterBase::APossessionIssueCharacterBase()
 	this->AbilitySystemComponent = NewAsc;
 }
 
-void APossessionIssueCharacterBase::RefreshAsc_Implementation()
+void APossessionIssueCharacterBase::RefreshAbilityActorInfo()
 {
-	this->AbilitySystemComponent->ClearActorInfo();
-	this->AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	this->AbilitySystemComponent->RefreshAbilityActorInfo();
 }
 
 UAbilitySystemComponent* APossessionIssueCharacterBase::GetAbilitySystemComponent() const
