@@ -34,26 +34,34 @@ APossessionIssueCharacterBase::APossessionIssueCharacterBase()
 	this->AbilitySystemComponent = NewAsc;
 }
 
-void APossessionIssueCharacterBase::RefreshAbilityActorInfo()
-{
-	this->AbilitySystemComponent->RefreshAbilityActorInfo();
-}
-
-UAbilitySystemComponent* APossessionIssueCharacterBase::GetAbilitySystemComponent() const
-{
-	check(this->AbilitySystemComponent);
-	return this->AbilitySystemComponent;
-}
-
 void APossessionIssueCharacterBase::PossessedBy(AController* NewController)
 {
+	UAbilitySystemComponent* Asc;
+
 	Super::PossessedBy(NewController);
 
-	if (this->AbilitySystemComponent != nullptr)
+	Asc = this->GetAbilitySystemComponent();
+
+	if (Asc != nullptr)
 	{
-		this->AbilitySystemComponent->InitAbilityActorInfo(this, this);
+		Asc->InitAbilityActorInfo(this, this);
 	}
 
 	// ASC MixedMode replication requires that the ASC Owner's Owner be the Controller.
 	this->SetOwner(NewController);
+}
+
+UAbilitySystemComponent* APossessionIssueCharacterBase::GetAbilitySystemComponent() const
+{
+	return this->AbilitySystemComponent;
+}
+
+void APossessionIssueCharacterBase::RefreshAbilityActorInfo()
+{
+	UAbilitySystemComponent* Asc = this->GetAbilitySystemComponent();
+
+	if (Asc != nullptr)
+	{
+		Asc->RefreshAbilityActorInfo();
+	}
 }

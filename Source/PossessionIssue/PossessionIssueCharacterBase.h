@@ -60,10 +60,9 @@ public:
 	explicit APossessionIssueCharacterBase();
 
 	// =================================================================================================================
-	// Public Methods - Pawn Overrides
+	// Public Methods - Character Overrides
 	// =================================================================================================================
-	UFUNCTION(BlueprintCallable)
-	virtual void RefreshAbilityActorInfo();
+	virtual void PossessedBy(AController * NewController) override;
 
 	// =================================================================================================================
 	// Public Methods - IAbilitySystemInterface Implementation
@@ -80,6 +79,12 @@ public:
 	// =================================================================================================================
 	// Public Methods
 	// =================================================================================================================
-	virtual void PossessedBy(AController * NewController) override;
-
+	/**
+	 * Triggers the ASC to reload information about the owning actor and the player controller.
+	 *
+	 * If ownership or possession of this character changes, this must be called on the *next* tick to ensure that the
+	 * ASC has the correct information about which abilities are initiated locally versus from the server.
+	 */
+	UFUNCTION(BlueprintCallable)
+	virtual void RefreshAbilityActorInfo();
 };
